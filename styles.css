@@ -103,3 +103,7 @@ button {
 
 /* Active Buttons */
 
+button:hover {
+    cursor: pointer;
+    background-color: rgba(247, 240, 245, 0.86);
+}
