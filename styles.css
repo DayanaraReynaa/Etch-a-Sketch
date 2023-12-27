@@ -46,6 +46,7 @@ button {
     height: 70%;
     display: flex;
     flex-direction: column;
+    box-shadow:rgba(247, 240, 245, 0.86);
 }
 
 .menu-container {
@@ -53,16 +54,21 @@ button {
     height: 100%;
     margin-left: 20px;
     background-color: #8F857D;
-    border: 8px solid #DECBB7;
+    border: 4px solid #DECBB7;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 40px;
+    box-shadow: 10px 10px 1px rgba(7, 6, 6, 0.3);
 }
 
 .grid-input {
+    text-align: center;
+    font-family: Roboto;
+    border: 2px solid #5C5552;
+    border-radius: 2px;
     width: 70px;
     height: 30px;
 }
@@ -85,6 +91,7 @@ button {
     background-color: #f7f0f5;
     border: 8px solid #DECBB7;
     border-radius: 5px;
+    box-shadow: 10px 10px 1px rgba(7, 6, 6, 0.3);
     display: flex;
     flex-direction: column;
 }
