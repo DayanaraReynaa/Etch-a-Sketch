@@ -1,10 +1,12 @@
 // Functions
 
-function paintGrid () {
+function paintGrid() {
     const gridSquares = document.querySelectorAll('.grid-square');
     gridSquares.forEach(gridSquare => {
         gridSquare.addEventListener('mouseover', () => {
-            gridSquare.style.backgroundColor = color;
+            if (!pointerBtn.classList.contains('active')) {
+                gridSquare.style.backgroundColor = color;
+            }
         });
     });
 }
@@ -49,10 +51,16 @@ const drawBtn = document.getElementById('draw-btn');
 const eraseBtn = document.getElementById('eraser-btn');
 const clearBtn = document.getElementById('clear-btn');
 const enterBtn = document.getElementById('grid-btn');
+const pointerBtn = document.getElementById('pointer-btn');
+const fillBtn = document.getElementById('fill-btn');
+const colorPicker = document.querySelector('.colorPicker');
 // ----------------------------------------------------
 
 drawBtn.addEventListener('click', function () {
-    color = 'black';
+    color = colorPicker.value;
+    if (pointerBtn.classList.contains('active')) {
+        pointerBtn.classList.remove('active');
+    }
 });
 
 eraseBtn.addEventListener('click', function () {
@@ -65,6 +73,19 @@ clearBtn.addEventListener('click', function () {
         gridSquare.style.backgroundColor = '#f7f0f5';
     });
 });
+
+fillBtn.addEventListener('click', function () {
+    const gridSquares = document.querySelectorAll('.grid-square');
+    gridSquares.forEach(gridSquare => {
+        gridSquare.style.backgroundColor = color;
+    });
+});
+
+pointerBtn.addEventListener('click', function() {
+    if (!pointerBtn.classList.contains('active')) {
+        pointerBtn.classList.add('active');
+    }
+})
 
 enterBtn.addEventListener('click', function () {
     // Get the new gridSize from the input
@@ -79,4 +100,9 @@ enterBtn.addEventListener('click', function () {
         sketchContainer.innerHTML = '';
         // Create a new grid
         createCanvas();
+});
+
+
+colorPicker.addEventListener('input', function() {
+    color = colorPicker.value;
 });
