@@ -1,12 +1,13 @@
 // Functions
-
 function paintGrid() {
     const gridSquares = document.querySelectorAll('.grid-square');
     gridSquares.forEach(gridSquare => {
         gridSquare.addEventListener('mouseover', () => {
             if (!pointerBtn.classList.contains('active')) {
-                if(rainbowBtn.classList.contains('active') && !eraseBtn.classList.contains('active')) {
+                if (rainbowBtn.classList.contains('active') && !eraseBtn.classList.contains('active')) {
                     color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+                } else if(eraseBtn.classList.contains('active')) {
+                    color = '#f7f0f5';
                 }
                 gridSquare.style.backgroundColor = color;
             }
@@ -34,8 +35,6 @@ function createCanvas() {
     paintGrid();
 }
 
-
-// ----------------------------------------------------
 // ----------------------------------------------------
 // Variables I
 const sketchContainer = document.querySelector('.sketch-container');
@@ -48,17 +47,59 @@ createCanvas();
 
 // ----------------------------------------------------
 // Button Vars
+const enterBtn = document.getElementById('grid-btn');
+const colorPicker = document.querySelector('.colorPicker');
+const regularBtn = document.getElementById('regular-btn');
+const rainbowBtn = document.getElementById('rainbow-btn');
+
 const drawBtn = document.getElementById('draw-btn');
 const eraseBtn = document.getElementById('eraser-btn');
-const clearBtn = document.getElementById('clear-btn');
-const enterBtn = document.getElementById('grid-btn');
 const pointerBtn = document.getElementById('pointer-btn');
 const fillBtn = document.getElementById('fill-btn');
-const rainbowBtn = document.getElementById('rainbow-btn');
-const regularBtn = document.getElementById('regular-btn');
-const colorPicker = document.querySelector('.colorPicker');
+const clearBtn = document.getElementById('clear-btn');
 // ----------------------------------------------------
 // Button Event Listeners
+
+enterBtn.addEventListener('click', function () {
+    // Get the new gridSize from the input
+    gridSize = parseInt(document.querySelector('.grid-input').value);
+
+    // Check if gridSize is a valid number
+    if (isNaN(gridSize) || gridSize > 100) {
+        gridSize = 16;
+    }
+    squareSize = 560 / gridSize;
+    // Clear the existing grid
+    sketchContainer.innerHTML = '';
+    // Create a new grid
+    createCanvas();
+});
+
+// ----------------------------------------------------
+
+colorPicker.addEventListener('input', function () {
+    color = colorPicker.value;
+});
+
+// ----------------------------------------------------
+
+regularBtn.addEventListener('click', function () {
+    if (rainbowBtn.classList.contains('active')) {
+        rainbowBtn.classList.remove('active');
+        color = colorPicker.value;
+    }
+});
+
+// ----------------------------------------------------
+
+rainbowBtn.addEventListener('click', function () {
+    if (!rainbowBtn.classList.contains('active')) {
+        rainbowBtn.classList.add('active');
+    }
+});
+
+// ----------------------------------------------------
+
 drawBtn.addEventListener('click', function () {
     color = colorPicker.value;
     if (pointerBtn.classList.contains('active')) {
@@ -71,11 +112,29 @@ drawBtn.addEventListener('click', function () {
 });
 // ----------------------------------------------------
 eraseBtn.addEventListener('click', function () {
-    color = '#f7f0f5';
     if (!eraseBtn.classList.contains('active')) {
         eraseBtn.classList.add('active');
     }
 });
+// ----------------------------------------------------
+
+pointerBtn.addEventListener('click', function () {
+    if (!pointerBtn.classList.contains('active')) {
+        pointerBtn.classList.add('active');
+    }
+})
+
+// ----------------------------------------------------
+fillBtn.addEventListener('click', function () {
+    const gridSquares = document.querySelectorAll('.grid-square');
+    gridSquares.forEach(gridSquare => {
+        if (rainbowBtn.classList.contains('active')) {
+            color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+        }
+        gridSquare.style.backgroundColor = color;
+    });
+});
+
 // ----------------------------------------------------
 clearBtn.addEventListener('click', function () {
     const gridSquares = document.querySelectorAll('.grid-square');
@@ -83,55 +142,3 @@ clearBtn.addEventListener('click', function () {
         gridSquare.style.backgroundColor = '#f7f0f5';
     });
 });
-// ----------------------------------------------------
-fillBtn.addEventListener('click', function () {
-    const gridSquares = document.querySelectorAll('.grid-square');
-    gridSquares.forEach(gridSquare => {
-        if(rainbowBtn.classList.contains('active')) {
-            color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
-        }
-        gridSquare.style.backgroundColor = color;
-    });
-});
-// ----------------------------------------------------
-pointerBtn.addEventListener('click', function() {
-    if (!pointerBtn.classList.contains('active')) {
-        pointerBtn.classList.add('active');
-    }
-})
-// ----------------------------------------------------
-enterBtn.addEventListener('click', function () {
-    // Get the new gridSize from the input
-    gridSize = parseInt(document.querySelector('.grid-input').value);
-
-    // Check if gridSize is a valid number
-    if (isNaN(gridSize) || gridSize > 100) {
-       gridSize = 16;
-    }
-        squareSize = 560 / gridSize;
-        // Clear the existing grid
-        sketchContainer.innerHTML = '';
-        // Create a new grid
-        createCanvas();
-});
-
-// ----------------------------------------------------
-colorPicker.addEventListener('input', function() {
-    color = colorPicker.value;
-});
-
-// ----------------------------------------------------
-rainbowBtn.addEventListener('click', function () {
-    if (!rainbowBtn.classList.contains('active')) {
-        rainbowBtn.classList.add('active');
-    }
-});
-// ----------------------------------------------------
-regularBtn.addEventListener('click', function () {
-    if (rainbowBtn.classList.contains('active')) {
-        rainbowBtn.classList.remove('active');
-        color = colorPicker.value;
-    }
-});
-
-
